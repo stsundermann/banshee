@@ -36,6 +36,7 @@
 #include "banshee-player-missing-elements.h"
 #include "banshee-player-replaygain.h"
 #include "banshee-player-vis.h"
+#include <glib/gstdio.h>
 
 // ---------------------------------------------------------------------------
 // Private Functions
@@ -120,10 +121,14 @@ bp_next_track_starting (BansheePlayer *player)
 static gboolean
 bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
 {
+    g_printf ("in bp_pipeline_bus_callback\n");
     BansheePlayer *player = (BansheePlayer *)userdata;
 
     g_return_val_if_fail (IS_BANSHEE_PLAYER (player), FALSE);
     g_return_val_if_fail (message != NULL, FALSE);
+
+    gboolean unknown = FALSE;
+    gchar *message_type_name = GST_MESSAGE_TYPE_NAME (message);
     
     switch (GST_MESSAGE_TYPE (message)) {
         case GST_MESSAGE_EOS: {
@@ -208,6 +213,10 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
         } 
         
         case GST_MESSAGE_ELEMENT: {
+             const GstStructure *messageStruct;
+             messageStruct = gst_message_get_structure (message);
+             gchar* name = gst_structure_get_name (messageStruct);
+             g_printf ("____name of the MESSAGE ELEMENT WAS %s", name);
             _bp_missing_elements_process_message (player, message);
             _bp_dvd_elements_process_message (player, message);
             break;
@@ -228,7 +237,10 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
             break;
         }
         
-        default: break;
+        default: 
+        unknown = TRUE;
+        g_printf ("_______unknown message type %s\n", message_type_name);
+        break;
     }
     
     return TRUE;

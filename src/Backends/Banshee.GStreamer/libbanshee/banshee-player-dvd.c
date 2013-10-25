@@ -82,6 +82,9 @@ _bp_dvd_elements_process_message (BansheePlayer *player, GstMessage *message)
     if (!player->navigation) {
         _bp_dvd_find_navigation (player);
     }
+    if (player->navigation == NULL)
+      return;
+
     if (!(gst_element_query (GST_ELEMENT_CAST (player->navigation), query)
         && gst_navigation_query_parse_commands_length (query, &n_cmds))) {
         gst_query_unref (query);
