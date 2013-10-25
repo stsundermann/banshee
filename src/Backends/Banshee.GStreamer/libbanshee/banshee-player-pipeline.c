@@ -128,7 +128,7 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
     g_return_val_if_fail (message != NULL, FALSE);
 
     gboolean unknown = FALSE;
-    gchar *message_type_name = GST_MESSAGE_TYPE_NAME (message);
+    const gchar *message_type_name = GST_MESSAGE_TYPE_NAME (message);
     
     switch (GST_MESSAGE_TYPE (message)) {
         case GST_MESSAGE_EOS: {
@@ -215,7 +215,7 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
         case GST_MESSAGE_ELEMENT: {
              const GstStructure *messageStruct;
              messageStruct = gst_message_get_structure (message);
-             gchar* name = gst_structure_get_name (messageStruct);
+             const gchar* name = gst_structure_get_name (messageStruct);
              g_printf ("____name of the MESSAGE ELEMENT WAS %s\n", name);
             _bp_missing_elements_process_message (player, message);
             _bp_dvd_elements_process_message (player, message);
