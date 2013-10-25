@@ -140,7 +140,7 @@ static void
 bp_video_bus_element_sync_message (GstBus *bus, GstMessage *message, BansheePlayer *player)
 {
     gboolean found_video_overlay;
-    g_printf ("_________bp_video_bus_element_sync_message !!! callbackcalled!");
+    g_printf ("_________bp_video_bus_element_sync_message !!! callbackcalled!\n");
     fflush(stdout);
     
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
@@ -148,12 +148,16 @@ bp_video_bus_element_sync_message (GstBus *bus, GstMessage *message, BansheePlay
     #if defined(GDK_WINDOWING_X11) || defined(GDK_WINDOWING_WIN32)
 
     if (!gst_is_video_overlay_prepare_window_handle_message (message)) {
+        g_printf ("_________PERO CANCELO!!!!!!!!!!!! :(\n");
+        fflush(stdout);
         return;
     }
 
     found_video_overlay = bp_video_find_video_overlay (player);
 
     if (found_video_overlay) {
+        g_printf ("_________ HE ENCONTRAO VIDEO OVERLAY! :) \n");
+        fflush(stdout);
         gst_video_overlay_set_window_handle (player->video_overlay, player->video_window_xid);
     }
 
