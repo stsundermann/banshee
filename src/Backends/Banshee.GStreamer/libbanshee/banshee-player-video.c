@@ -29,6 +29,8 @@
 //
 
 #include "banshee-player-video.h"
+#include <glib/gstdio.h>
+#include <stdio.h>
 
 // ---------------------------------------------------------------------------
 // Private Functions
@@ -138,6 +140,8 @@ static void
 bp_video_bus_element_sync_message (GstBus *bus, GstMessage *message, BansheePlayer *player)
 {
     gboolean found_video_overlay;
+    g_printf ("_________bp_video_bus_element_sync_message !!! callbackcalled!");
+    fflush(stdout);
     
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
 
