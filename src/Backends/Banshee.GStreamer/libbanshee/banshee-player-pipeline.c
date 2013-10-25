@@ -216,7 +216,7 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
              const GstStructure *messageStruct;
              messageStruct = gst_message_get_structure (message);
              gchar* name = gst_structure_get_name (messageStruct);
-             g_printf ("____name of the MESSAGE ELEMENT WAS %s", name);
+             g_printf ("____name of the MESSAGE ELEMENT WAS %s\n", name);
             _bp_missing_elements_process_message (player, message);
             _bp_dvd_elements_process_message (player, message);
             break;
