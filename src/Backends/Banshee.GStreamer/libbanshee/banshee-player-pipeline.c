@@ -37,6 +37,7 @@
 #include "banshee-player-replaygain.h"
 #include "banshee-player-vis.h"
 #include <glib/gstdio.h>
+#include <stdio.h>
 
 // ---------------------------------------------------------------------------
 // Private Functions
@@ -217,6 +218,7 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
              messageStruct = gst_message_get_structure (message);
              const gchar* name = gst_structure_get_name (messageStruct);
              g_printf ("____name of the MESSAGE ELEMENT WAS %s\n", name);
+             fflush(stdout);
             _bp_missing_elements_process_message (player, message);
             _bp_dvd_elements_process_message (player, message);
             break;
@@ -240,6 +242,7 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
         default: 
         unknown = TRUE;
         g_printf ("_______unknown message type %s\n", message_type_name);
+        fflush (stdout);
         break;
     }
     
