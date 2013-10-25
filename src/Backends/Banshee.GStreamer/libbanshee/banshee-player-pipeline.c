@@ -121,7 +121,7 @@ bp_next_track_starting (BansheePlayer *player)
 static gboolean
 bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
 {
-    g_printf ("in bp_pipeline_bus_callback\n");
+    //g_printf ("in bp_pipeline_bus_callback\n");
     BansheePlayer *player = (BansheePlayer *)userdata;
 
     g_return_val_if_fail (IS_BANSHEE_PLAYER (player), FALSE);
